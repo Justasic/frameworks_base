@@ -282,4 +282,7 @@
 
   <!-- Whether doze feature is enabled by default in settings -->
   <java-symbol type="bool" name="config_dozeDefaultEnabled" />
+
+  <!-- Whether to send camera status intent -->
+  <java-symbol type="bool" name="config_sendCameraStatusIntent" />
 </resources>
