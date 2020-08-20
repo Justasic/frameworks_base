@@ -110,9 +110,9 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
     private IFingerprintInscreen mFingerprintInscreenDaemon;
 
-    private int mColorBackground;
     private int mCurrentBrightness;
     private int mDreamingOffsetY;
+    private int mColorBackground;
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
@@ -411,7 +411,9 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         } else {
             mDozeEnabled = TunerService.parseIntegerSwitch(newValue, true);
         }
-    }
+		mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
+		updateIconDim(false);
+	}
 
     private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
     private class CustomSettingsObserver extends ContentObserver {
@@ -445,12 +447,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         public void update() {
             updateStyle();
         }
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
-        updateIconDim(false);
     }
 
     private int interpolate(int i, int i2, int i3, int i4, int i5) {
@@ -500,12 +496,12 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
                 });
                 anim.setDuration(1000);
                 mIsAnimating = true;
-                anim.start();
+                mHandler.post(() -> anim.start());
             } else if (!mIsAnimating) {
                 setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
             }
         } else {
-            setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+            mHandler.post(() -> setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
         }
     }
 

@@ -4033,6 +4033,9 @@
   <!-- Set to true to make assistant show in front of the dream/screensaver. -->
   <java-symbol type="bool" name="config_assistantOnTopOfDream"/>
 
+  <!-- FOD icon dimming -->
+  <java-symbol type="bool" name="config_targetUsesInKernelDimming" />
+
   <java-symbol type="string" name="config_overrideComponentUiPackage" />
 
   <java-symbol type="string" name="notification_channel_network_status" />
